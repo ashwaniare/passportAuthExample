@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-4 col-centered vertical-center">
+     <div class="page-header">
+      <h1>User Registration</br><small>Made Simple</small></h1>
+    </div>
+    <form name="UserCreateForm" id="UserCreateForm" novalidate ng-submit="createUser()">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="text" ng-model="form.email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" ng-model="form.password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+     <!--  <div class="form-group">
+        <label for="exampleFirstName">Name</label>
+        <input type="text" ng-model="form.name" class="form-control" id="exampleFirstName" placeholder="Name">
+      </div> -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="alert alert-danger top-buffer" ng-show="errorMessage" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{errorMessage}}
+    </div>
+    </div>
+    </form>
+      </div>
+</div>
