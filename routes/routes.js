@@ -42,6 +42,10 @@ module.exports = function(app, passport){
     app.get('/getProfile', isLoggedIn, function(req, res){
         res.send({success:true, user:req.user});
     });
+
+    app.get('/loggedIn', function(req, res){
+        res.send(req.isAuthenticated() ? req.user:'0');
+    });
 }
 
 // route middleware to make sure a user is logged in
@@ -50,8 +54,8 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    // if they aren't redirect them to the home page
-    return res.send({success : false, message : 'Session Expired, Please log in again.'});
+    // if they aren't send a 401- not authorized
+    return res.sendStatus(401);
 }
 
 // module.exports = (function() {
