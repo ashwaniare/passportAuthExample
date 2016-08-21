@@ -46,6 +46,19 @@ module.exports = function(app, passport){
     app.get('/loggedIn', function(req, res){
         res.send(req.isAuthenticated() ? req.user:'0');
     });
+
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope:'email'}));
+
+    app.get('/auth/facebook/callback', function(req, res, next){
+        passport.authenticate('facebook', function(err, user, info){
+            if(err) return next(err);
+            //this is the actual log in
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                return res.send({success : true});
+            })(req, res, next);
+        });
+    });
 }
 
 // route middleware to make sure a user is logged in

@@ -33,5 +33,5 @@ app.use(passport.session()); //persistent login sessions
 require('./routes/routes')(app, passport);
 
 app.listen(3000, function(){
-	console.log('Server Running...');
+	console.log('Server Running at port 3000...');
 });

@@ -1,6 +1,6 @@
 var app = angular.module('app');
 
-app.controller('UserController', ['$scope', '$http', '$location', '$routeParams', 
+app.controller('UserController', ['$scope', '$http', '$location', '$routeParams',
 	function($scope, $http, $location, $routeParams){
 		//console.log('loggedIn::',loggedIn);
 		console.log('UserController loaded....');
@@ -18,7 +18,6 @@ app.controller('UserController', ['$scope', '$http', '$location', '$routeParams'
 		}
 
 		$scope.login = function(){
-			console.log('calling');
 			var formData = $scope.form;
 			$http.post('/login', formData).success(function(data, status, headers){
 				console.log('data', data);
@@ -30,5 +29,4 @@ app.controller('UserController', ['$scope', '$http', '$location', '$routeParams'
 				}
 			});
 		}
-
 }]);

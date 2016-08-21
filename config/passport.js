@@ -1,7 +1,12 @@
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 //load the user model
 var Users = require('../models/users');
+
+//load the auth configuration
+
+var authConfig = require('./auth');
 
 //exposing this function to out app using module.exports
 
@@ -70,6 +75,36 @@ module.exports = function(passport){
 
 				//if all is well, return the user
 				return done(null, user, 'User login successful!');
+			});
+		});
+	}));
+
+	//facebook login strategy
+	passport.use('facebook', new FacebookStrategy({
+		clientID: authConfig.facebookAuth.clientID,
+		clientSecret: authConfig.facebookAuth.clientSecret,
+		callbackURL: authConfig.facebookAuth.callbackURL
+	}, function(token, refreshToken, profile, done){
+
+		process.nextTick(function(){
+			console.log(token);
+			console.log(refreshToken);
+			console.log(profile);
+			Users.findOne({'facebook.id': profile.id}, function(err, user){
+				if(err) return done(err);
+				if(user) return done(null, user);
+				else{
+					var newUser = new User();
+					newUser.facebook.id = profile.id;
+					newUser.facebook.token = token;
+					newUser.facebook.name = profile.name.givenName+ ' '+profile.name.familyName;
+					newUser.facebook.email = profile.emails[0].value;
+
+					newUser.save(function(err){
+						if(err) return done(err);
+						return done(null, newUser);
+					});
+				}
 			});
 		});
 	}));
